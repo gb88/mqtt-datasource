@@ -101,8 +101,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 		return
 	}
 	timestamp = time.Now()
-	if(isJSON(string(msg.Payload())))
-	{
+	if(isJSON(string(msg.Payload()))){
 		var json_payload map[string]interface{}
 		json.Unmarshal([]byte(string(msg.Payload())), &json_payload)
 		if (json_payload.has("timestamp")) {
