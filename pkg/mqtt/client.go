@@ -110,6 +110,9 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 		if _, ok := json_payload["timestamp"]; ok {
 			t := json_payload["timestamp"].(string)
 			timestamp, _ = time.Parse(time.UnixDate,t)
+			delete(json_payload,"timestamp")
+			clean_payload, err := json.Marshal(json_payload)
+			payload = string(clean_payload)
 		}
 	}
 	// store message for query
