@@ -96,7 +96,7 @@ func isJSON(s string) bool {
 func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 	log.DefaultLogger.Debug(fmt.Sprintf("Received MQTT Message for topic %s", msg.Topic()))
 	topic, ok := c.topics.Load(msg.Topic())
-	time.Time timestamp
+	var timestamp
 	if !ok {
 		return
 	}
