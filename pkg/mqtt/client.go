@@ -115,7 +115,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 			payload = string(clean_payload)
 		}
 	}
-	fmt.Println(payload)
+	fmt.Println("payload %s",payload)
 	// store message for query
 	message := Message{
 		Timestamp: timestamp,
