@@ -108,9 +108,9 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 		var json_payload map[string]interface{}
 		json.Unmarshal([]byte(string(msg.Payload())), &json_payload)
 		if _, ok := json_payload["timestamp"]; ok {
-			//t := json_payload["timestamp"].(string)
-			timestamp = time.Now()
-			//time.Parse(time.UnixDate,t)
+			t := json_payload["timestamp"].(string)
+			n, _ := strconv.ParseInt(t, 10, 64)
+			timestamp = time.UnixMicro(n)
 			delete(json_payload,"timestamp")
 			clean_payload, _ := json.Marshal(json_payload)
 			payload = string(clean_payload)
