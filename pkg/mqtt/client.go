@@ -111,7 +111,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 	}
 	// store message for query
 	message := Message{
-		Timestamp: time.Now(),
+		Timestamp: timestamp,
 		Value:     string(msg.Payload()),
 	}
 	topic.messages = append(topic.messages, message)
