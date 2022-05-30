@@ -111,7 +111,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 			t := json_payload["timestamp"].(string)
 			timestamp, _ = time.Parse(time.UnixDate,t)
 			delete(json_payload,"timestamp")
-			clean_payload, err := json.Marshal(json_payload)
+			clean_payload, _ := json.Marshal(json_payload)
 			payload = string(clean_payload)
 		}
 	}
