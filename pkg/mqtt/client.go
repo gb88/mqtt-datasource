@@ -105,7 +105,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 		var json_payload map[string]interface{}
 		json.Unmarshal([]byte(string(msg.Payload())), &json_payload)
 		if _, ok := json_payload["timestamp"]; ok {
-			timestamp = json_payload['timestamp']
+			timestamp = time.Time(json_payload['timestamp'])
 		}
 	}
 	// store message for query
