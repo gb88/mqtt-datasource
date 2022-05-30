@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"encoding/json"
 
 	paho "github.com/eclipse/paho.mqtt.golang"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
@@ -87,13 +88,27 @@ func (c *Client) Stream() chan StreamMessage {
 	return c.stream
 }
 
+func isJSON(s string) bool {
+	var js interface{}
+	return json.Unmarshal([]byte(s), &js) == nil
+}
+
 func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 	log.DefaultLogger.Debug(fmt.Sprintf("Received MQTT Message for topic %s", msg.Topic()))
 	topic, ok := c.topics.Load(msg.Topic())
+	time.Time timestamp;
 	if !ok {
 		return
 	}
-
+	timestamp = time.Now()
+	if(isJSON(string(msg.Payload())))
+	{
+		var json_payload map[string]interface{}
+		json.Unmarshal([]byte(string(msg.Payload())), &json_payload)
+		if (json_payload.has("timestamp")) {
+			timestamp = json_payload['timestamp']
+		}
+	}
 	// store message for query
 	message := Message{
 		Timestamp: time.Now(),
