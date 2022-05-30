@@ -180,7 +180,7 @@ func (ds *MQTTDatasource) SendMessage(msg mqtt.StreamMessage, req *backend.RunSt
 	}
 
 	message := mqtt.Message{
-		Timestamp: time.Now(),
+		Timestamp: msg.Timestamp,
 		Value:     msg.Value,
 	}
 

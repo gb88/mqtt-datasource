@@ -17,6 +17,7 @@ type Options struct {
 }
 
 type StreamMessage struct {
+	Timestamp time.Time
 	Topic string
 	Value string
 }
@@ -107,7 +108,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 
 	c.topics.Store(topic)
 
-	streamMessage := StreamMessage{Topic: msg.Topic(), Value: string(msg.Payload())}
+	streamMessage := StreamMessage{Timestamp: msg.Timestamp, Topic: msg.Topic(), Value: string(msg.Payload())}
 	select {
 	case c.stream <- streamMessage:
 	default:
