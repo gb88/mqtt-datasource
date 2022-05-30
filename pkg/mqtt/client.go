@@ -130,7 +130,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 
 	c.topics.Store(topic)
 
-	streamMessage := StreamMessage{Timestamp: message.Timestamp, Topic: msg.Topic(), Value: string(msg.Payload())}
+	streamMessage := StreamMessage{Timestamp: message.Timestamp, Topic: msg.Topic(), Value: payload}
 	select {
 	case c.stream <- streamMessage:
 	default:
