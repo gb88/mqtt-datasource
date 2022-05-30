@@ -97,11 +97,14 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 	log.DefaultLogger.Debug(fmt.Sprintf("Received MQTT Message for topic %s", msg.Topic()))
 	topic, ok := c.topics.Load(msg.Topic())
 	var timestamp time.Time
+	var payload string
 	if !ok {
 		return
 	}
 	timestamp = time.Now()
-	if(isJSON(string(msg.Payload()))){
+	payload = string(msg.Payload())
+	
+	if(isJSON(payload)){
 		var json_payload map[string]interface{}
 		json.Unmarshal([]byte(string(msg.Payload())), &json_payload)
 		if _, ok := json_payload["timestamp"]; ok {
@@ -112,7 +115,7 @@ func (c *Client) HandleMessage(_ paho.Client, msg paho.Message) {
 	// store message for query
 	message := Message{
 		Timestamp: timestamp,
-		Value:     string(msg.Payload()),
+		Value:     payload,
 	}
 	topic.messages = append(topic.messages, message)
 
